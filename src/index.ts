@@ -94,5 +94,5 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
 const port = process.env.PORT || 4000;
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}....`)
+  console.log(`Listening on port ${port}...`)
 })

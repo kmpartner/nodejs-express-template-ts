@@ -1,0 +1,70 @@
+name: CI
+on:
+  # - pull_request
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 # may be actions/checkout@v2 now
+      # - name: Login to DockerHub Registry
+        # run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Get the version
+        id: vars
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+      - name: echo
+        run: echo ${{steps.vars.outputs.tag}}
+      # - name: npm Start
+      #   run: npm install && npm start
+      - name: Build Docker image
+        run: docker build . --file Dockerfile --tag kmpartner/nodejs-express-template-ts
+      - name: Create container
+        run: docker run -d -p 4000:4000 --name node-test kmpartner/nodejs-express-template-ts
+      - name: Test
+        run: docker ps && docker logs node-test
+
+
+# jobs:
+#   job1:
+#     runs-on: ubuntu-latest
+#     name: build example and deploy to minikbue
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: log untrusted output
+#       run: |
+
+#         # disable command workflow processing
+#         echo "::stop-commands::`echo -n ${{ github.token }} | sha256sum | head -c 64`"
+
+#         # log untrusted output
+#         echo "untrusted output"
+
+#         # enable workflow command processing
+#         echo "::`echo -n ${{ github.token }} | sha256sum | head -c 64`::"
+
+#     - name: Start minikube
+#       uses: medyagh/setup-minikube@master
+#     - name: Try the cluster !
+#       run: kubectl get pods -A
+#     - name: Build image
+#       run: |
+#         export SHELL=/bin/bash
+#         eval $(minikube -p minikube docker-env)
+#         docker build -f ./Dockerfile -t local/example .
+#         echo -n "verifying images:"
+#         docker images
+#     - name: Deploy to minikube
+#       run: |
+#         kubectl apply -f deploy-to-minikube.yaml
+#     - name: Test service URLs
+#       run: |
+#         kubectl get pod
+#         export TEST_POD=$(kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}' | grep example)
+#         kubectl wait --for=condition=Ready pod/$TEST_POD
+#         kubectl get pod
+#         minikube service list
+#         minikube service example --url
+#         echo "------------------opening the service------------------"
+#         echo $(minikube service example --url)
+#         curl $(minikube service example --url)
