@@ -3,7 +3,7 @@ variables:
 #  IMAGE: ci-build
  GROUP: x
  REPO: nodejs-express-template-ts-gitlab
- IMAGE: x
+ IMAGE: ci-build
 
 build:
   image: docker:19.03.12
@@ -15,7 +15,7 @@ build:
     - echo $TIME
     - echo $CI_COMMIT_SHA
 
-    - IMAGENAME=$CI_REGISTRY/$CI_PROJECT_ROOT_NAMESPACE/$REPO/$CI_PROJECT_ID:$CI_COMMIT_SHA
+    - IMAGENAME=$CI_REGISTRY/$CI_PROJECT_ROOT_NAMESPACE/$CI_PROJECT_NAME/$image:$CI_COMMIT_SHA
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $IMAGENAME .
     
