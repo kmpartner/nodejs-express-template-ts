@@ -2,7 +2,7 @@ variables:
 #  REPO: ud-rest-gql-api-nodejs-rpx
 #  IMAGE: ci-build
  GROUP: x
- REPO: nodejs-express-template-gitlab
+ REPO: nodejs-express-template-ts-gitlab
  IMAGE: x
 
 build:
