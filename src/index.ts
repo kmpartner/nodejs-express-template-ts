@@ -69,7 +69,7 @@ app.get('/xxx', (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.get('/healthz', (req: Request, res: Response, next: NextFunction) => {
-  res.send('<h3> /healthz</h3>');
+  res.send('<h3> /healthz . </h3>');
 });
 
 app.get('/error-test', (req: Request, res: Response, next: NextFunction) => {
