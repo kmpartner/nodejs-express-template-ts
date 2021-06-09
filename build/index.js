@@ -51,7 +51,7 @@ app.get('/xxx', function (req, res, next) {
     res.send('hi from nodejs-express-template ts /xxx');
 });
 app.get('/healthz', function (req, res, next) {
-    res.send('<h3> /healthz</h3>');
+    res.send('<h3> /healthz . </h3>');
 });
 app.get('/error-test', function (req, res, next) {
     res.status(400).json({ message: 'error occured' });
@@ -66,7 +66,7 @@ app.use(function (error, req, res, next) {
     var status = error.statusCode || 500;
     var message = error.message;
     var data = error.data;
-    res.status(status).json({ message: message, data: data });
+    res.status(status).json({ message: message, data: data, error: error });
     // res.json({ message: message, data: data })
 });
 var port = process.env.PORT || 4000;
