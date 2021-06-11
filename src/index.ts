@@ -81,6 +81,11 @@ app.get('/error-test', (req: Request, res: Response, next: NextFunction) => {
   // return;
 });
 
+
+app.get('/', (req: Request, res: Response, next: NextFunction) => {
+  res.send('<h3>hi from nodejs-express-template ts / </h3>');
+});
+
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   console.log(error);
   console.log(error.statusCode);
